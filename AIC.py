@@ -14,29 +14,25 @@ descriptions = []
 totals = []
 
 #Given data coordinates
-
-full_name_coords = [400,800]
-date_coords = [400,780]
-invoice_coords = [400,760]
-due_date_coords = [400,740]
-description_coords = [35,700]
-image_size = [240,80]
 y_offset = 30
 y_offset_2 = 20
 y_offset_3 = 5
 x_offset_1 = 5
 x_offset_2 = 150
-table_coords = [35,690]
-
-#Skeleton Coordinates
-
-billed_to_coords = [300,800]
-issue_date_coords = [300,780]
-invoice_coords_skel = [300,760]
-due_date_coords_skel = [300,740]
-image_coords = [30,735]
+table_coords = [72,590]
+full_name_coords = [152,650]
+date_coords = [452,650]
+invoice_coords = [152,630]
+due_date_coords = [452,630]
 image_size = [240,80]
 
+#Skeleton Coordinates
+invoice_front_coords = [249,710]
+billed_to_coords = [72,650]
+issue_date_coords = [372,650]
+invoice_coords_skel = [72,630]
+due_date_coords_skel = [372,630]
+image_coords = [177,735]
 
 def createTable(n,descs,quants,tots,currency,tax):
 	c.rect(table_coords[0],table_coords[1]-y_offset*(n+1),x_offset_2*3,y_offset*(n+1))
@@ -63,7 +59,20 @@ def createTable(n,descs,quants,tots,currency,tax):
 	c.drawString(table_coords[0]+x_offset_1+x_offset_2,table_coords[1]-y_offset_3-y_offset*(n+3/2),"Sum Total")
 	c.drawString(table_coords[0]+x_offset_1+x_offset_2,table_coords[1]-y_offset_3-y_offset*(n+5/2),"Tax (%)")
 	c.drawString(table_coords[0]+x_offset_1+x_offset_2,table_coords[1]-y_offset_3-y_offset*(n+7/2),"Sum Total with tax")	
-	
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+12/2),"Payment Instructions (TBC):")
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+12/2)-y_offset_2,"JSC TBC Bank")
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+12/2)-y_offset_2*2,"TBCBGE22")
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+12/2)-y_offset_2*3,"GE41TB7002536170100002 (USD)")
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+12/2)-y_offset_2*4,"Prime Management LLC")
+	c.drawString(table_coords[0]+x_offset_2*2,table_coords[1]-y_offset_3-y_offset*(n+12/2),"Payment Instructions (BOG):")
+	c.drawString(table_coords[0]+x_offset_2*2,table_coords[1]-y_offset_3-y_offset*(n+12/2)-y_offset_2,"JSC Bank of Georgia")
+	c.drawString(table_coords[0]+x_offset_2*2,table_coords[1]-y_offset_3-y_offset*(n+12/2)-y_offset_2*2,"BAGAGE22")
+	c.drawString(table_coords[0]+x_offset_2*2,table_coords[1]-y_offset_3-y_offset*(n+12/2)-y_offset_2*3,"GE93BG0000000607816171")
+	c.drawString(table_coords[0]+x_offset_2*2,table_coords[1]-y_offset_3-y_offset*(n+12/2)-y_offset_2*4,"Prime Management LLC")
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+16/2)-y_offset_2*4,"Company address:")
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+16/2)-y_offset_2*5,"Georgia, Tbilisi, Krtsanisi district, Rustavi highway,")
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+16/2)-y_offset_2*6,"N19, building N3, floor N1, storeroom")
+	c.drawString(table_coords[0],table_coords[1]-y_offset_3-y_offset*(n+16/2)-y_offset_2*7,"Company postal code: 0114")
 def askForData():
 	surname = input("Surname: ")
 	name = input("Name: ")
@@ -77,8 +86,10 @@ def askForData():
 	match currency_selection:
 		case "1":
 			currency_selection = "(USD)"
+			filename = "請求書(USD)"
 		case "2":
 			currency_selection = "(GEL)"
+		
 	for i in range(0,number_of_descriptions):
 		a = input(f"Description {i+1}: ")
 		descriptions.append(a)
@@ -123,11 +134,15 @@ def createSkeleton():
 	issue_date = "Issue date:"
 	invoice_id = "Invoice ID:"
 	due_date = "Due date:"
+	invoice_front = "I N V O I C E"
 	c.drawString(billed_to_coords[0],billed_to_coords[1], billed_to)
 	c.drawString(issue_date_coords[0],issue_date_coords[1],issue_date)
 	c.drawString(invoice_coords_skel[0],invoice_coords_skel[1],invoice_id)
 	c.drawString(due_date_coords_skel[0],due_date_coords_skel[1],due_date)
 	c.drawImage("logo.png",image_coords[0],image_coords[1],image_size[0],image_size[1])
+	c.setFont("Times-Roman",20)
+	c.drawString(invoice_front_coords[0],invoice_front_coords[1],invoice_front)
+
 c = canvas.Canvas(filename)
 askForData()
 createSkeleton()
